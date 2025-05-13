@@ -5,11 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Observation extends Model
+class Order extends Model
 {
     use HasFactory;
-    protected $table = 'observation';
+    protected $table = 'order';
     protected $fillable =[
-        'description'
+        'legalization_date',
+        'address',
+        'city',
+        'observation_id',
+        'causal_id'
     ];
 }
