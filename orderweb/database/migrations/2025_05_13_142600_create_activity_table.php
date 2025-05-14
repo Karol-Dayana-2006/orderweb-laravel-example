@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('hours')->comment('horas de duración');
             $table->foreignId('technician_id')->constrained('technician')
                     ->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('type_activity')->constrained('type_activity')
+            $table->foreignId('type_activity_id')->constrained('type_activity')
                     ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
