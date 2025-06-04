@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Causal extends Model
 {
     use HasFactory;
-    protected $table = 'causal';
-    protected $fillable =[
+    protected $table = "causal";
+    protected $fillable = [
         'description'
     ];
 

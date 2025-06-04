@@ -17,7 +17,7 @@ return new class extends Migration
                     ->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('activity_id')->constrained('activity')
                     ->onDelete('cascade')->onUpdate('cascade');
-            $table->unique(['order_id', 'activity_id']);
+            $table->unique(['order_id', 'activity_id']);        
             $table->timestamps();
         });
     }

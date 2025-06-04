@@ -9,9 +9,9 @@ class OrderActivity extends Model
 {
     use HasFactory;
     protected $table = 'order_activity';
-    protected $fillable =[
+    protected $fillable = [
         'order_id',
-        'order_activity'
+        'activity_id'
     ];
 
     public function order()

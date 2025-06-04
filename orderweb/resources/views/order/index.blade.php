@@ -1,11 +1,11 @@
 @extends('templates.base')
-@section('title', 'observaciones')
-@section('header', 'observaciones')
-@section('content')
-    
+@section('title', 'Órdenes')
+@section('header', 'Órdenes')
+@section('content')    
+
     <div class="row">
         <div class="col-lg-12 mb-4 d-grid gap-2 d-md-block">
-            <a href="{{ route('observation.create') }}" class="btn btn-primary">Crear</a>
+            <a href="{{ route('order.create') }}" class="btn btn-primary">Crear</a>
         </div>
     </div>
 
@@ -14,43 +14,46 @@
     <div class="row">
         <div class="col-lg-12 mb-4">
             <table id="table_data" class="table table-striped table-hover">
-                
-              <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>fecha de legalización</th>
-                    <th>Dirección</th>
-                    <th>ciudad</th>
-                    <th>Causal</th>
-                    <th>Observación</th>
-                    <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Orden de prueba</td>
-                    <td>2025/02/15</td>
-                    <td>tulua</td>
-                    <td>causal de prueba</td>
-                    <td>observación de prueba</td>
-                    <td>
-                        <a href="#" class="btn btn-primary btn-circle btn-sm" title="Editar">
-                            <i class="far fa-edit"></i>
-                        </a>
-                        <a href="#" class="btn btn-danger btn-circle btn-sm" title="Eliminar"
-                            onclick="return remove();">
-                            <i class="fas fa-trans"></i>
-                        </a>
-                    </td>
-                </tr>
-              </tbody>
-
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Fecha legalización</th>
+                        <th>Dirección</th>
+                        <th>Ciudad</th>
+                        <th>Causal</th>
+                        <th>Observación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($orders as $order)
+                        <tr>
+                            <td>{{ $order['id'] }}</td>
+                            <td>{{ $order['legalization_date'] }}</td>
+                            <td>{{ $order['address'] }}</td>
+                            <td>{{ $order['city'] }}</td>
+                            <td>{{ $order->causal->description }}</td>
+                            <td>@if($order->observation) {{ $order->observation->description }} @endif</td>
+                            <td>
+                                <a href="{{ route('order.edit', $order['id']) }}" class="btn btn-primary btn-circle btn-sm" title="Editar">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                                <a href="{{ route('order.destroy', $order['id']) }}" class="btn btn-danger btn-circle btn-sm" title="Eliminar" 
+                                    onclick="return remove();">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    
+                </tbody>
             </table>
         </div>
     </div>
+    
 
 @endsection
+
 @section('scripts')
     <script src="{{ asset('js/general.js') }}"></script>
 @endsection

@@ -16,9 +16,9 @@ class TestActivitySeeder extends Seeder
     public function run(): void
     {
         $activity = new Activity();
-        $activity->description = 'Actividad de prueba 3';
+        $activity->description = "Actividad de prueba 3";
         $activity->hours = 2;
-
+        //FKs
         $technician = Technician::where('document', 1116222333)->first();
         $activity->technician_id = $technician->id;
 

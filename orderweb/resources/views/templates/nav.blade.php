@@ -15,7 +15,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('index') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Home</span></a>
             </li>
@@ -105,8 +105,8 @@
                     </a>
                     <div id="collapse5" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="#">Consultar</a>
-                            <a class="collapse-item" href="#">Crear</a>
+                            <a class="collapse-item" href="{{ route('type_activity.index') }}">Consultar</a>
+                            <a class="collapse-item" href="{{ route('type_activity.create') }}">Crear</a>
                         </div>
                     </div>
                 </li>

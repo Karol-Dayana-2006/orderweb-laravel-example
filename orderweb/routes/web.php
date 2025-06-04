@@ -1,31 +1,47 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CausalController;
-use App\Models\Causal;
-use Illuminate\Routing\Route as RoutingRoute;
+use App\Http\Controllers\ObservationController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TechnicianController;
+use App\Http\Controllers\TypeActivityController;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Rutas Web
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Aquí es donde puedes registrar las rutas web para tu aplicación. Estas
-| rutas son cargadas por el RouteServiceProvider y todas serán
-| asignadas al grupo de middleware "web". ¡Haz algo grandioso!
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
-// Página principal y pruebas
-Route::get('/', function () {
-    return view('test');
-})->name('test');
+Route::get('/', [AuthController::class, 'index']);
 
-Route::get('/test2', function () {
+Route::middleware('auth')->get('/index', function () {
+    return view('index');
+})->name('index');
+
+/* Route::get('/test2', function () {
     return view('test2');
-})->name('test2');
+})->name('test2'); */
 
-Route::prefix('causal')->group(function(){
+Route::prefix('auth')->group(function(){
+    Route::get('/index', [AuthController::class, 'index'])->name('auth.index');
+    Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+    Route::get('/register', [AuthController::class, 'create'])->name('auth.register');
+    Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
+});
+
+Route::middleware('auth')->prefix('auth')->group(function(){
+    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+});
+
+Route::middleware('auth')->prefix('causal')->group(function(){
     Route::get('/index', [CausalController::class, 'index'])->name('causal.index');
     Route::get('/create', [CausalController::class, 'create'])->name('causal.create');
     Route::get('/edit/{id}', [CausalController::class, 'edit'])->name('causal.edit');
@@ -34,73 +50,50 @@ Route::prefix('causal')->group(function(){
     Route::get('/destroy/{id}', [CausalController::class, 'destroy'])->name('causal.destroy');
 });
 
+Route::middleware('auth')->prefix('observation')->group(function(){
+    Route::get('/index', [ObservationController::class, 'index'])->name('observation.index');
+    Route::get('/create', [ObservationController::class, 'create'])->name('observation.create');
+    Route::get('/edit/{id}', [ObservationController::class, 'edit'])->name('observation.edit');
+    Route::post('/store', [ObservationController::class, 'store'])->name('observation.store');
+    Route::put('/update/{id}', [ObservationController::class, 'update'])->name('observation.update');
+    Route::get('/destroy/{id}', [ObservationController::class, 'destroy'])->name('observation.destroy');
+});
 
+Route::middleware('auth')->prefix('type_activity')->group(function(){
+    Route::get('/index', [TypeActivityController::class, 'index'])->name('type_activity.index');
+    Route::get('/create', [TypeActivityController::class, 'create'])->name('type_activity.create');
+    Route::get('/edit/{id}', [TypeActivityController::class, 'edit'])->name('type_activity.edit');
+    Route::post('/store', [TypeActivityController::class, 'store'])->name('type_activity.store');
+    Route::put('/update/{id}', [TypeActivityController::class, 'update'])->name('type_activity.update');
+    Route::get('/destroy/{id}', [TypeActivityController::class, 'destroy'])->name('type_activity.destroy');
+});
 
-// Rutas para Observaciones
-route::get('/observation/create', function () {
-    return view('observation.create');
-})->name('observation.create');
+Route::middleware('auth')->prefix('technician')->group(function(){
+    Route::get('/index', [TechnicianController::class, 'index'])->name('technician.index');
+    Route::get('/create', [TechnicianController::class, 'create'])->name('technician.create');
+    Route::get('/edit/{id}', [TechnicianController::class, 'edit'])->name('technician.edit');
+    Route::post('/store', [TechnicianController::class, 'store'])->name('technician.store');
+    Route::put('/update/{id}', [TechnicianController::class, 'update'])->name('technician.update');
+    Route::get('/destroy/{id}', [TechnicianController::class, 'destroy'])->name('technician.destroy');
+});
 
-route::get('/observation/index', function () {
-    return view('observation.index');
-})->name('observation.index');
+Route::middleware('auth')->prefix('activity')->group(function(){
+    Route::get('/index', [ActivityController::class, 'index'])->name('activity.index');
+    Route::get('/create', [ActivityController::class, 'create'])->name('activity.create');
+    Route::get('/edit/{id}', [ActivityController::class, 'edit'])->name('activity.edit');
+    Route::post('/store', [ActivityController::class, 'store'])->name('activity.store');
+    Route::put('/update/{id}', [ActivityController::class, 'update'])->name('activity.update');
+    Route::get('/destroy/{id}', [ActivityController::class, 'destroy'])->name('activity.destroy');
+});
 
-route::get('/observation/edit', function () {
-    return view('observation.edit');
-})->name('observation.edit');
-
-// Rutas para Tipos de Actividad
-route::get('/type_activity/create', function () {
-    return view('type_activity.create');
-})->name('type_activity.create');
-
-route::get('/type_activityn/index', function () {
-    return view('type_activity.index');
-})->name('type_activity.index');
-
-route::get('/type_activityn/edit', function () {
-    return view('type_activity.edit');
-})->name('type_activity.edit');
-
-// Rutas para Actividades
-route::get('/activity/create', function () {
-    return view('activity.create');
-})->name('activity.create');
-
-route::get('/activity/index', function () {
-    return view('activity.index');
-})->name('activity.index');
-
-route::get('/activity/edit', function () {
-    return view('activity.edit');
-})->name('activity.edit');
-
-// Rutas para Ordenes
-route::get('/order/create', function () {
-    return view('order.create');
-})->name('order.create');
-
-route::get('/order/index', function () {
-    return view('order.index');
-})->name('order.index');
-
-route::get('/order/edit', function () {
-    return view('order.edit');
-})->name('order.edit');
-
-// Rutas para Técnicos
-route::get('/technician/create', function () {
-    return view('technician.create');
-})->name('technician.create');
-
-route::get('/technician/index', function () {
-    return view('technician.index');
-})->name('technician.index');
-
-route::get('/technician/edit', function () {
-    return view('technician.edit');
-})->name('technician.edit');
-
-
-
+Route::middleware('auth')->prefix('order')->group(function(){
+    Route::get('/index', [OrderController::class, 'index'])->name('order.index');
+    Route::get('/create', [OrderController::class, 'create'])->name('order.create');
+    Route::get('/edit/{id}', [OrderController::class, 'edit'])->name('order.edit');
+    Route::post('/store', [OrderController::class, 'store'])->name('order.store');
+    Route::put('/update/{id}', [OrderController::class, 'update'])->name('order.update');
+    Route::get('/destroy/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+    Route::get('/add_activity/{order_id}/{activity_id}', [OrderController::class, 'add_activity'])->name('order.add_activity');
+    Route::get('/remove_activity/{order_id}/{activity_id}', [OrderController::class, 'remove_activity'])->name('order.remove_activity');
+});
 

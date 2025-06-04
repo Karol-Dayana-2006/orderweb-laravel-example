@@ -1,4 +1,5 @@
-h1{
+h1
+{
     color: brown;
     font-weight: bold;
 }
@@ -22,7 +23,7 @@ q
     margin-right: auto;
 }
 
-.copyrigh
+.copyright
 {
     margin: 0 auto;
     font-style: italic;

@@ -9,7 +9,7 @@ class TypeActivity extends Model
 {
     use HasFactory;
     protected $table = 'type_activity';
-    protected $fillable =[
+    protected $fillable = [
         'description'
     ];
 

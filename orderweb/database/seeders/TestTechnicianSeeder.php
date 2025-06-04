@@ -15,9 +15,9 @@ class TestTechnicianSeeder extends Seeder
     {
         $technician = new Technician();
         $technician->document = 1116222333;
-        $technician->name = 'Alba Rotte';
-        $technician->speciality = 'Plomería';
-        $technician->phone = '3204567890';
+        $technician->name = "Alba Rotte";
+        $technician->speciality = "Plomería";
+        $technician->phone = "2255353";
         $technician->save();
     }
 }
