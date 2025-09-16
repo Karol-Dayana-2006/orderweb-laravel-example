@@ -21,6 +21,7 @@ class AuthController extends Controller
         'password' => 'contraseña',
         'password_confirmation' => 'confirmar contraseña'
     ];
+
     /**
      * Display a listing of the resource.
      */
@@ -45,8 +46,7 @@ class AuthController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $validator =  Validator::make($request->all(), $this->rules);
         $validator->setAttributeNames($this->traductionAttributes);
@@ -57,7 +57,7 @@ class AuthController extends Controller
                             ->withInput()->withErrors($errors);
         }
         $request['password'] = bcrypt($request['password']);
-        $user= User::create($request->all());
+        $user = User::create($request->all());
         session()->flash('message', 'Registro creado exitosamente');
         return redirect()->route('auth.index');
     }

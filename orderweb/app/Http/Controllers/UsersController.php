@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Mail;
 
 class UsersController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        //consultando todos los usuarios de rol supervisor
         $users = User::where('role_id', 2)->get();
         return view('users.index', compact('users'));
     }
